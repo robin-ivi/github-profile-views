@@ -7,7 +7,8 @@ const Redis = require("ioredis");
 const app = express();
 app.use(cors());
 
-const redis = new Redis(process.env.REDIS_URL); // Connect to Vercel KV Redis
+// Connect to Redis using environment variable
+const redis = new Redis(process.env.REDIS_URL);
 
 app.get("/views", async (req, res) => {
     try {
@@ -21,5 +22,5 @@ app.get("/views", async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+// Export the Express app for Vercel
+module.exports = app;
