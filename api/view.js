@@ -7,13 +7,13 @@ const Redis = require("ioredis");
 const app = express();
 app.use(cors());
 
-// Connect to Redis using environment variable
+// Connect to Upstash Redis
 const redis = new Redis(process.env.REDIS_URL);
 
-app.get("/views", async (req, res) => {
+app.get("/api/views", async (req, res) => {
     try {
         let views = await redis.get("views");
-        views = views ? parseInt(views) + 1 : 1; // Increment view count
+        views = views ? parseInt(views) + 1 : 1;
         await redis.set("views", views);
         res.json({ views });
     } catch (error) {
@@ -22,5 +22,4 @@ app.get("/views", async (req, res) => {
     }
 });
 
-// Export the Express app for Vercel
-module.exports = app;
+module.exports = app;  // ✅ Export the app (Important for Vercel)
