@@ -1,14 +1,18 @@
 const express = require("express");
 const cors = require("cors");
-const { kv } = require("@vercel/kv");
+const Redis = require("ioredis");
+require("dotenv").config();
 
 const app = express();
 app.use(cors());
 
+// Connect to Upstash Redis
+const redis = new Redis(process.env.REDIS_URL);
+
 app.get("/views", async (req, res) => {
-    let views = await kv.get("profile_views") || 0;
-    views++;
-    await kv.set("profile_views", views);
+    let views = await redis.get("profile_views");
+    views = views ? parseInt(views) + 1 : 1;
+    await redis.set("profile_views", views);
     res.json({ views });
 });
 
