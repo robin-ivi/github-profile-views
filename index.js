@@ -1,9 +1,7 @@
 const { createCanvas } = require("canvas");
 
-// Serve visitor count as an image
 app.get("/count", (req, res) => {
-    const width = 200;
-    const height = 50;
+    const width = 200, height = 50;
     const canvas = createCanvas(width, height);
     const ctx = canvas.getContext("2d");
 
@@ -17,7 +15,6 @@ app.get("/count", (req, res) => {
     ctx.fillText(`Visitors: ${visitCount}`, 50, 30);
 
     res.setHeader("Content-Type", "image/png");
-    canvas.toBuffer((err, buf) => {
-        res.send(buf);
-    });
+    res.setHeader("Cache-Control", "no-cache");
+    res.send(canvas.toBuffer("image/png"));
 });
