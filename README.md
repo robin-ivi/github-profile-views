@@ -18,7 +18,7 @@ A simple Node.js and Express.js project that counts the number of visitors to yo
 ## 🔧 Setup & Installation
 ### 1️⃣ Clone Repository
 ```sh
-git clone https://github.com/your-username/github-visitor-counter.git
+git clone https://github.com/robin-ivi/github-profile-views.git
 cd github-visitor-counter
 ```
 
