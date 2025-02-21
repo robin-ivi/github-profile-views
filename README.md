@@ -1,6 +1,6 @@
 # GitHub Visitor Counter
 
-![Visitor Count](https://github-profile-views.onrender.com/count)
+![Visitor Count](https://img.shields.io/badge/dynamic/json?color=blue&label=Visitors&query=visitors&url=https%3A%2F%2Fgithub-profile-views.onrender.com%2Fcount)
 
 A simple Node.js and Express.js project that counts the number of visitors to your GitHub profile or repository. The count updates every time someone visits the deployed link.
 
