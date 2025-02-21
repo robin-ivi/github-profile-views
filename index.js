@@ -1,27 +1,23 @@
-const express = require("express");
-const fs = require("fs");
-const app = express();
-const PORT = process.env.PORT || 3000;
+const { createCanvas } = require("canvas");
 
-// File to store visitor count
-const COUNT_FILE = "count.txt";
-
-// Read visitor count from file or initialize
-let visitCount = 0;
-if (fs.existsSync(COUNT_FILE)) {
-    visitCount = parseInt(fs.readFileSync(COUNT_FILE, "utf8")) || 0;
-}
-
-app.get("/", (req, res) => {
-    visitCount++;
-    fs.writeFileSync(COUNT_FILE, visitCount.toString());
-    res.send(`Total Visitors: ${visitCount}`);
-});
-
+// Serve visitor count as an image
 app.get("/count", (req, res) => {
-    res.json({ visitors: visitCount });
-});
+    const width = 200;
+    const height = 50;
+    const canvas = createCanvas(width, height);
+    const ctx = canvas.getContext("2d");
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    // Background
+    ctx.fillStyle = "#f0f0f0";
+    ctx.fillRect(0, 0, width, height);
+
+    // Text
+    ctx.fillStyle = "#333";
+    ctx.font = "20px Arial";
+    ctx.fillText(`Visitors: ${visitCount}`, 50, 30);
+
+    res.setHeader("Content-Type", "image/png");
+    canvas.toBuffer((err, buf) => {
+        res.send(buf);
+    });
 });
